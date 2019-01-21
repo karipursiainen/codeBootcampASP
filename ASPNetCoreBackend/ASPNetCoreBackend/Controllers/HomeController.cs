@@ -39,5 +39,14 @@ namespace ASPNetCoreBackend.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public IActionResult OmaJuttu()
+        {
+            return View();
+        }
+        public string OmaJuttu2()
+        {
+            return "Oma juttu2";
+        }
     }
 }
