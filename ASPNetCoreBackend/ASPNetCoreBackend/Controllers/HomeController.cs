@@ -44,9 +44,23 @@ namespace ASPNetCoreBackend.Controllers
         {
             return View();
         }
-        public string OmaJuttu2()
+        public IActionResult Asiakkaat(string id)
         {
-            return "Oma juttu2";
+            NorthwindContext context = new NorthwindContext();
+
+            string maa = id;
+            List<Customers> asiakkaat = (from c in context.Customers
+                                        where c.Country == maa
+                                        orderby c.CompanyName
+                                        select c).ToList();
+
+            return View(asiakkaat);
+            //return View(context.Customers);
+        }
+        public IActionResult Tuotteet()
+        {
+            NorthwindContext context = new NorthwindContext();
+            return View(context.Products);
         }
     }
 }
