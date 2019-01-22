@@ -36,6 +36,69 @@ namespace ASPNetCoreBackend.Controllers
             return null;
         }
 
+        // Poisto
+        [HttpDelete]
+        [Route("{customerid}")]
+        public Customers Delete(string customerid)
+        {
+            NorthwindContext context = new NorthwindContext();
+
+            if (customerid != null)
+            {
+                Customers customer = context.Customers.Find(customerid);
+                if (customer != null)
+                {
+                    context.Customers.Remove(customer);
+                    context.SaveChanges(); // tallentaa tietokantaan
+                }
+                return customer;
+            }
+            return null;
+        }
+
+        // Muokkaus
+        [HttpPut]
+        [Route("{customerid}")]
+        public Customers PutEdit([FromRoute] string customerid, 
+                                 [FromBody] Customers newData)
+        {
+            NorthwindContext context = new NorthwindContext();
+
+            if (customerid != null)
+            {
+                Customers customer = context.Customers.Find(customerid);
+
+                if (customer != null)
+                {
+                    customer.CompanyName = newData.CompanyName;
+                    customer.ContactName = newData.ContactName;
+                    customer.City = newData.City;
+                    customer.Country = newData.Country;
+                    //...
+                    
+                    context.SaveChanges(); // tallentaa tietokantaan
+
+                }
+
+                return customer;
+            }
+
+            return null;
+        }
+
+        // Lisäys
+        [HttpPost]
+        [Route("")]
+        public Customers PostCreateNew(Customers customer)
+        {
+            NorthwindContext context = new NorthwindContext();
+
+            context.Customers.Add(customer);
+            context.SaveChanges(); // tallentaa tietokantaan
+
+            return customer;
+        }
+
 
         [HttpGet]
         [Route("pvm")]
